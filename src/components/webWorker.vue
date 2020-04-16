@@ -4,7 +4,7 @@
     <div>
       <Button type="primary" v-on:click="webWork">开始启用多线程</Button>
     </div>
-    <div class="result">多线程处理累加一百亿次 :{{ res }}</div>
+    <div class="result">多线程处理累加十亿次 :{{ res }}</div>
   </div>
 </template>
 
