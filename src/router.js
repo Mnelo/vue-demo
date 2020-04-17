@@ -2,10 +2,11 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 // 引入组件
-import login from "./login.vue";
-import mainPage from "./mainPage.vue";
-import hello from "./components/hello.vue";
-import webWorker from "./components/webWorker.vue";
+import login from "./login";
+import mainPage from "./mainPage";
+import hello from "./components/hello";
+import webWorker from "./components/webWorker";
+import d3 from "./components/d3";
 
 // 要告诉 vue 使用 vueRouter
 Vue.use(VueRouter);
@@ -28,8 +29,12 @@ const routes = [
         component: hello,
       },
       {
-        path: "/mainPage/webWorker",
+        path: "/mainPage/web-worker",
         component: webWorker,
+      },
+      {
+        path: "/mainPage/d3",
+        component: d3,
       },
     ],
   },

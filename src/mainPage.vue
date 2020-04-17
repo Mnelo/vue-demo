@@ -4,12 +4,16 @@
     <div class="side-bar">
       <Menu :theme="theme" :active-name="active" class="side-menu">
         <Menu-item name="/mainPage/hello" to="/mainPage/hello">
-          <Icon type="document-text"></Icon>
+          <Icon size="16" type="ios-paper" />
           hello
         </Menu-item>
-        <Menu-item name="/mainPage/webWorker" to="/mainPage/webWorker">
-          <Icon type="chatbubbles"></Icon>
+        <Menu-item name="/mainPage/web-worker" to="/mainPage/web-worker">
+          <Icon size="16" type="ios-people" />
           测试webWorker
+        </Menu-item>
+        <Menu-item name="/mainPage/d3" to="/mainPage/d3">
+          <Icon size="16" type="ios-stats" />
+          D3
         </Menu-item>
       </Menu>
     </div>
@@ -37,12 +41,6 @@ export default {
 
 <style lang="less" scoped>
 .main-page {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-
   .head {
     width: 100%;
     height: 60px;
@@ -57,6 +55,7 @@ export default {
 
     .side-menu {
       height: 820px;
+      text-align: left;
     }
   }
 
@@ -65,6 +64,7 @@ export default {
     background-color: white;
     border: 1px solid #e8ecf0;
     margin: 20px 20px 0 280px;
+    padding: 20px 0 0 0;
   }
 
   .footer {
