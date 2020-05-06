@@ -2,9 +2,10 @@
   <div class="web-worker">
     <h1>{{ title }}</h1>
     <div>
+      <InputNumber v-model="value" style="width: 200px"></InputNumber>
       <Button type="primary" v-on:click="webWork">开始启用多线程</Button>
     </div>
-    <div class="result">多线程处理累加十亿次 :{{ res }}</div>
+    <div class="result">{{ res }}</div>
   </div>
 </template>
 
@@ -15,8 +16,9 @@ export default {
   name: "webWorker",
   data() {
     return {
+      value: 0,
       title: "测试web worker",
-      res: " 等待结果",
+      res: "测试质数，等待结果",
     };
   },
   methods: {
@@ -24,7 +26,7 @@ export default {
       const worker = new Worker();
 
       //向worker发送数据
-      worker.postMessage(0);
+      worker.postMessage(this.value);
 
       //接收worker传过来的数据函数
       worker.onmessage = (e) => {

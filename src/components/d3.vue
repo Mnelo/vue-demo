@@ -207,9 +207,9 @@ export default {
             return d.y - 20;
           });
 
-        if (forceSimulation.alpha() <= 0.3) {
-          forceSimulation.stop();
-        }
+        // if (forceSimulation.alpha() <= 0.3) {
+        //   forceSimulation.stop();
+        // }
       };
 
       /**

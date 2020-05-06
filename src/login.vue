@@ -69,7 +69,7 @@ export default {
         if (valid) {
           this.$cookies.set("token", 1);
 
-          location.href = `${location.origin}/mainPage/hello`;
+          location.href = `${location.origin}/#/mainPage/hello`;
         } else {
           this.$Message.error("请输入账号密码！");
         }
