@@ -1,7 +1,7 @@
 <template>
   <div class="d3">
     <h1>D3</h1>
-    <Button type="primary" v-on:click.once="createGraphics(nodes, edges)"
+    <Button type="primary" v-on:click.once="createGraphics(nodes, edges, test)"
       >绘制图形</Button
     >
     <div class="graphics-area">
@@ -58,10 +58,34 @@ export default {
         { source: 0, target: 17, lineLength: 200, relation: "专辑" },
         { source: 0, target: 18, lineLength: 200, relation: "女儿" },
       ],
+      test: {
+        menuLeft: ["菜单1"],
+        menuRight: ["菜单2"],
+      },
     };
   },
   methods: {
-    createGraphics(nodes, edges) {
+    createGraphics(nodes, edges, test) {
+      // 监听全局点击事件
+      document
+        .querySelector(".graphics-area")
+        .addEventListener("click", function(e) {
+          if (e.path.length > 11) {
+            return;
+          }
+
+          menuLeft.attr("stroke-width", "0");
+          menuRight.attr("stroke-width", "0");
+          menuLeftText.text((d) => {
+            return null;
+          });
+          menuRightText.text((d) => {
+            return null;
+          });
+
+          return;
+        });
+
       /**
        * @description 设置曲线上文字描述的位置
        * @param {number} targetX 终点x轴坐标
@@ -121,6 +145,10 @@ export default {
       const dragged = (d) => {
         d.fx = d3.event.x;
         d.fy = d3.event.y;
+
+        if (menuLeft.attr("stroke-width") === "78") {
+          setMenu(d, d.fx, d.fy);
+        }
       };
 
       /**
@@ -342,6 +370,72 @@ export default {
           return "#233156";
         });
 
+      let menuRight = g
+        .append("g")
+        .selectAll("menuRight")
+        .data(test.menuRight)
+        .enter()
+        .append("path")
+        .attr("stroke", "rgba(49,69,122,0.8)")
+        .attr("stroke-width", "0")
+        .attr("fill", "none")
+        .on("mouseover", () => {
+          menuRight.attr("stroke", "rgba(49,69,122)");
+        })
+        .on("mouseout", () => {
+          menuRight.attr("stroke", "rgba(49,69,122,0.8)");
+        })
+        .on("click", (d) => {
+          console.log(456);
+        });
+
+      let menuRightText = g
+        .append("g")
+        .selectAll("text")
+        .data(test.menuRight)
+        .enter()
+        .append("text")
+        .text((d, i) => {
+          return d;
+        })
+        .attr("fill", (d, i) => {
+          return "#FFF";
+        })
+        .attr("font-size", 18);
+
+      let menuLeft = g
+        .append("g")
+        .selectAll("menuRight")
+        .data(test.menuLeft)
+        .enter()
+        .append("path")
+        .attr("stroke", "rgba(49,69,122,0.8)")
+        .attr("stroke-width", "0")
+        .attr("fill", "none")
+        .on("mouseover", () => {
+          menuLeft.attr("stroke", "rgba(49,69,122)");
+        })
+        .on("mouseout", () => {
+          menuLeft.attr("stroke", "rgba(49,69,122,0.8)");
+        })
+        .on("click", (d) => {
+          console.log(456);
+        });
+
+      let menuLeftText = g
+        .append("g")
+        .selectAll("text")
+        .data(test.menuLeft)
+        .enter()
+        .append("text")
+        .text((d, i) => {
+          return d;
+        })
+        .attr("fill", (d, i) => {
+          return "#FFF";
+        })
+        .attr("font-size", 18);
+
       //节点
       let gs = g
         .selectAll("circle")
@@ -359,7 +453,32 @@ export default {
             .on("start", started)
             .on("drag", dragged)
             .on("end", ended)
-        );
+        )
+        .on("click", (d) => {
+          setMenu(d, d.x, d.y);
+        });
+
+      const setMenu = (d, x, y) => {
+        const menuLeftDistance = `M ${x} ${y + 80} A 80 80, 0, 0, 1, ${x},${y -
+          80}`;
+        const menuRightDistance = `M ${x} ${y - 80} A 80 80, 0, 0, 1, ${x},${y +
+          80}`;
+
+        menuLeft.attr("d", menuLeftDistance);
+        menuRight.attr("d", menuRightDistance);
+
+        menuLeftText.attr("x", x - 100).attr("y", y);
+        menuRightText.attr("x", x + 60).attr("y", y);
+
+        menuLeft.attr("stroke-width", "78");
+        menuRight.attr("stroke-width", "78");
+        menuLeftText.text((dsc) => {
+          return dsc;
+        });
+        menuRightText.text((dsc) => {
+          return dsc;
+        });
+      };
     },
   },
 };
@@ -378,6 +497,16 @@ export default {
       width: 1200px;
       height: 650px;
       background-color: darkgrey;
+    }
+
+    .menu-left {
+      stroke: #000;
+      stroke-width: 78;
+      fill: none;
+    }
+
+    .menu-left:hover {
+      stroke: red;
     }
   }
 }
